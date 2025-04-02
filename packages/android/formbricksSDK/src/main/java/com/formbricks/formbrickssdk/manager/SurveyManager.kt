@@ -107,6 +107,7 @@ object SurveyManager {
                 if (it.after(Date())) {
                     Logger.d("Environment state is still valid until $it")
                     filterSurveys()
+                    Formbricks.callback?.onSuccess(SuccessType.GET_ENVIRONMENT_SUCCESS)
                     return
                 }
             }

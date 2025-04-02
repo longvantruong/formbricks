@@ -12,6 +12,7 @@ import com.formbricks.formbrickssdk.manager.SurveyManager
 import com.formbricks.formbrickssdk.manager.UserManager
 import com.formbricks.formbrickssdk.model.enums.SuccessType
 import com.formbricks.formbrickssdk.model.error.SDKError
+import com.formbricks.formbrickssdk.model.enums.SuccessType
 import com.formbricks.formbrickssdk.webview.FormbricksFragment
 import java.lang.RuntimeException
 
@@ -27,6 +28,16 @@ interface FormbricksCallback {
 
 
 @Keep
+interface FormbricksCallback {
+    fun onSurveyStarted()
+    fun onSurveyFinished()
+    fun onSurveyClosed()
+    fun onPageCommitVisible()
+    fun onError(error: Exception)
+    fun onSuccess(successType: SuccessType)
+}
+
+@Keep
 object Formbricks {
     internal lateinit var applicationContext: Context
 
@@ -34,8 +45,10 @@ object Formbricks {
     internal lateinit var appUrl: String
     internal var language: String = "default"
     internal var loggingEnabled: Boolean = true
+    internal var autoDismissErrors: Boolean = true
     private var fragmentManager: FragmentManager? = null
     internal var isInitialized = false
+    var callback: FormbricksCallback? = null
 
     var callback: FormbricksCallback? = null
 
@@ -73,7 +86,7 @@ object Formbricks {
         environmentId = config.environmentId
         loggingEnabled = config.loggingEnabled
         fragmentManager = config.fragmentManager
-
+        autoDismissErrors = config.autoDismissErrors
         config.userId?.let { UserManager.set(it) }
         config.attributes?.let { UserManager.setAttributes(it) }
         config.attributes?.get("language")?.let { UserManager.setLanguage(it) }
@@ -100,6 +113,7 @@ object Formbricks {
             callback?.onError(error)
             Logger.e(error)
             return
+
         }
 
         if(UserManager.userId != null) {

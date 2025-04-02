@@ -156,7 +156,9 @@ class FormbricksFragment : BottomSheetDialogFragment() {
                     consoleMessage?.let { cm ->
                         if (cm.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
                             Formbricks.callback?.onError(SDKError.surveyDisplayFetchError)
-                            dismiss()
+                            if (Formbricks.autoDismissErrors) {
+                                dismiss()
+                            }
                         }
                         val log = "[CONSOLE:${cm.messageLevel()}] \"${cm.message()}\", source: ${cm.sourceId()} (${cm.lineNumber()})"
                         Logger.d(log)
@@ -184,6 +186,7 @@ class FormbricksFragment : BottomSheetDialogFragment() {
 
                 override fun onPageCommitVisible(view: WebView?, url: String?) {
                     dialog?.window?.setDimAmount(0.5f)
+                    Formbricks.callback?.onSurveyStarted()
                     super.onPageCommitVisible(view, url)
                 }
             }
