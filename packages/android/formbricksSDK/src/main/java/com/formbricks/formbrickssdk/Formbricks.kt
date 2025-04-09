@@ -193,7 +193,7 @@ object Formbricks {
      * ```
      *
      */
-    fun track(action: String) {
+    fun track(action: String, hiddenFields: Map<String, Any>? = null) {
         if (!isInitialized) {
             val error = SDKError.sdkIsNotInitialized
             callback?.onError(error)
@@ -208,7 +208,7 @@ object Formbricks {
             return
         }
 
-        SurveyManager.track(action)
+        SurveyManager.track(action = action, hiddenFields = hiddenFields)
     }
 
     /**
@@ -247,7 +247,7 @@ object Formbricks {
     }
 
     /// Assembles the survey fragment and presents it
-    internal fun showSurvey(id: String) {
+    internal fun showSurvey(id: String, hiddenFields: Map<String, Any>? = null) {
         if (fragmentManager == null) {
             val error = SDKError.fragmentManagerIsNotSet
             callback?.onError(error)
@@ -256,7 +256,7 @@ object Formbricks {
         }
 
         fragmentManager?.let {
-            FormbricksFragment.show(it, surveyId = id)
+            FormbricksFragment.show(it, surveyId = id, hiddenFields = hiddenFields)
         }
     }
 
