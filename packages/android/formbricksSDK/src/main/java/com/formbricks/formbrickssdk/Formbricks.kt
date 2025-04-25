@@ -100,6 +100,14 @@ object Formbricks {
             return
 
         }
+
+        if(UserManager.userId != null) {
+            val error = RuntimeException("A userId is already set ${UserManager.userId} - please call logout first before setting a new one")
+            callback?.onError(error)
+            Logger.e(error)
+            return
+        }
+
         UserManager.set(userId)
     }
 
