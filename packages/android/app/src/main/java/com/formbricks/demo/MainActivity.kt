@@ -43,6 +43,33 @@ class MainActivity : FragmentActivity() {
 
         }
 
+        Formbricks.callback = object: FormbricksCallback {
+            override fun onSurveyStarted() {
+                Log.d("FormbricksCallback", "onSurveyStarted")
+            }
+
+            override fun onSurveyFinished() {
+                Log.d("FormbricksCallback", "onSurveyFinished")
+            }
+
+            override fun onSurveyClosed() {
+                Log.d("FormbricksCallback", "onSurveyClosed")
+            }
+
+            override fun onPageCommitVisible() {
+                Log.d("FormbricksCallback", "onPageCommitVisible")
+            }
+
+            override fun onError(error: Exception) {
+                Log.d("FormbricksCallback", "onError from the CB: ${error.localizedMessage}")
+            }
+
+            override fun onSuccess(successType: SuccessType) {
+                Log.d("FormbricksCallback", "onSuccess: ${successType.name}")
+            }
+
+        }
+
         val config = FormbricksConfig.Builder("[appUrl]","[environmentId]")
             .setLoggingEnabled(true)
             .setFragmentManager(supportFragmentManager)
