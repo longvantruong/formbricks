@@ -1,3 +1,6 @@
+import { EMAIL_VERIFICATION_DISABLED, ENCRYPTION_KEY, ENTERPRISE_LICENSE_KEY } from "@/lib/constants";
+import { symmetricDecrypt, symmetricEncrypt } from "@/lib/crypto";
+import { verifyToken } from "@/lib/jwt";
 import { getUserByEmail, updateUser, updateUserLastLoginAt } from "@/modules/auth/lib/user";
 import { verifyPassword } from "@/modules/auth/lib/utils";
 import { getSSOProviders } from "@/modules/ee/sso/lib/providers";
@@ -6,13 +9,6 @@ import type { Account, NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
 import { prisma } from "@formbricks/database";
-import {
-  EMAIL_VERIFICATION_DISABLED,
-  ENCRYPTION_KEY,
-  ENTERPRISE_LICENSE_KEY,
-} from "@formbricks/lib/constants";
-import { symmetricDecrypt, symmetricEncrypt } from "@formbricks/lib/crypto";
-import { verifyToken } from "@formbricks/lib/jwt";
 import { logger } from "@formbricks/logger";
 import { TUser } from "@formbricks/types/user";
 import { createBrevoCustomer } from "./brevo";
@@ -181,6 +177,17 @@ export const authOptions: NextAuthOptions = {
     // Conditionally add enterprise SSO providers
     ...(ENTERPRISE_LICENSE_KEY ? getSSOProviders() : []),
   ],
+  cookies: {
+    sessionToken: {
+      name: "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+      },
+    },
+  },
   session: {
     maxAge: 3600,
   },
