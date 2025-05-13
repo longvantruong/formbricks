@@ -27,6 +27,23 @@ import com.google.gson.JsonObject
 //        }
 //    }
 //}
+
+
+
+//// 1. kotlinx-serialization-json
+//def serializationDep = dependenciesNode.appendNode('dependency')
+//serializationDep.appendNode('groupId', 'org.jetbrains.kotlinx')
+//serializationDep.appendNode('artifactId', 'kotlinx-serialization-json')
+//serializationDep.appendNode('version', '1.6.0') // thay version bạn đang dùng
+//serializationDep.appendNode('scope', 'compile')
+//
+//// 2. formbricksSDK (nếu SDK của bạn phụ thuộc vào chính formbricksSDK ở version khác)
+//def formbricksDep = dependenciesNode.appendNode('dependency')
+//formbricksDep.appendNode('groupId', 'com.formbricks.formbrickssdk')
+//formbricksDep.appendNode('artifactId', 'formbricksSDK')
+//formbricksDep.appendNode('version', '1.0.1')
+//formbricksDep.appendNode('scope', 'compile')
+
 /**
  *
  *
