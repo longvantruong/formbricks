@@ -44,6 +44,22 @@ import com.google.gson.JsonObject
 //formbricksDep.appendNode('version', '1.0.1')
 //formbricksDep.appendNode('scope', 'compile')
 
+
+//def addDependencyNode = { groupId, artifactId ->
+//    def dep = configurations.implementation.allDependencies.find {
+//        it.group == groupId && it.name == artifactId
+//    }
+//
+//    if (dep != null && dep.version != null) {
+//        def node = dependenciesNode.appendNode('dependency')
+//        node.appendNode('groupId', dep.group)
+//        node.appendNode('artifactId', dep.name)
+//        node.appendNode('version', dep.version)
+//        node.appendNode('scope', 'compile')
+//    } else {
+//
+//    }
+//}
 /**
  *
  *
