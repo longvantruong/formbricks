@@ -15,7 +15,24 @@ import com.formbricks.formbrickssdk.model.environment.getSurveyJson
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 
+//pom.withXml {
+//    def dependenciesNode = asNode().appendNode('dependencies')
+//    configurations.implementation.allDependencies.each { dep ->
+//        if (dep.group != null && dep.version != null) {
+//            def dependencyNode = dependenciesNode.appendNode('dependency')
+//            dependencyNode.appendNode('groupId', dep.group)
+//            dependencyNode.appendNode('artifactId', dep.name)
+//            dependencyNode.appendNode('version', dep.version)
+//            dependencyNode.appendNode('scope', 'compile')
+//        }
+//    }
+//}
 /**
+ *
+ *
+ *
+ *
+ *
  * A view model for the Formbricks WebView.
  * It generates the HTML string with the necessary data to render the survey.
  */
